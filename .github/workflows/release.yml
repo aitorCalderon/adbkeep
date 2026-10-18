@@ -1,5 +1,5 @@
 # Builds the installers with tauri-action and attaches them to a draft GitHub release:
-# AppImage, .deb and .rpm (Linux), .dmg (macOS, Apple silicon and Intel) and .msi/.exe (Windows).
+# AppImage, .deb, .rpm and a plain .tar.gz (Linux), .dmg (macOS, Apple silicon and Intel) and .msi/.exe (Windows).
 # Runs on a `v*` tag or by hand.
 #
 # Each build downloads Google's platform-tools for its own OS (see scripts/fetch-platform-tools.mjs
@@ -106,6 +106,20 @@ jobs:
           releaseDraft: true
           prerelease: false
           args: ${{ matrix.args }}
+
+      # Plain Linux tarball. Tauri looks for the resources in <exe dir>/../lib/adbkeep, so the
+      # layout is a relocatable prefix: bin/adbkeep + lib/adbkeep/{platform-tools,helper}.
+      - name: Linux tarball
+        if: matrix.os == 'linux' && github.ref_type == 'tag'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          name=adbkeep-linux-x86_64
+          mkdir -p "$name/bin" "$name/lib/adbkeep"
+          cp target/release/adbkeep "$name/bin/"
+          cp -r src-tauri/resources/platform-tools src-tauri/resources/helper "$name/lib/adbkeep/"
+          tar czf "$name.tar.gz" "$name"
+          gh release upload "${{ github.ref_name }}" "$name.tar.gz" --clobber
 
       # Manual runs have no tag to publish to: keep the installers as run artifacts.
       - uses: actions/upload-artifact@v4
