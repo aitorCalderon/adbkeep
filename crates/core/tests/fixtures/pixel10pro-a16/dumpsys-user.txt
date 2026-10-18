@@ -1,0 +1,39 @@
+Current user: 0
+
+Users:
+  UserInfo{0:null:4c13} serialNo=0 isPrimary=true
+    Type: android.os.usertype.full.SYSTEM
+    Flags: 19475 (ADMIN|FULL|INITIALIZED|MAIN|PRIMARY|SYSTEM)
+    State: RUNNING_UNLOCKED
+    Created: <unknown>
+    Last logged in: +2h12m51s214ms ago
+    Start time: +2h12m54s18ms ago
+    Unlock time: +2h12m51s417ms ago
+    Last entered foreground: +2h12m54s18ms ago
+    Restrictions:
+      none
+    Device policy restrictions:
+      none
+    Effective restrictions:
+      none
+    Can have profile: true
+    UserProperties:
+        mPropertiesPresent=0
+        mShowInLauncher=0
+        mStartWithParent=false
+        mShowInSettings=0
+        mInheritDevicePolicy=0
+        mUseParentsContacts=false
+        mUpdateCrossProfileIntentFiltersOnOTA=false
+        mCrossProfileIntentFilterAccessControl=0
+        mCrossProfileIntentResolutionStrategy=0
+        mMediaSharedWithParent=false
+        mCredentialShareableWithParent=false
+        mAuthAlwaysRequiredToDisableQuietMode=false
+        mAllowStoppingUserWithDelayedLocking=false
+        mDeleteAppWithParent=false
+        mAlwaysVisible=false
+        mCrossProfileContentSharingStrategy=0
+        mProfileApiVisibility=0
+        mItemsRestrictedOnHomeScreen=false
+    Ignore errors preparing storage: false

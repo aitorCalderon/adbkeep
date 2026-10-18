@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <title>AdbKeep</title>
+  <rect x="100" y="100" width="824" height="824" rx="186" fill="#0F6E5C"/>
+  <!-- móvil -->
+  <rect x="372" y="176" width="280" height="400" rx="56" fill="none" stroke="#FFFFFF" stroke-width="40"/>
+  <line x1="476" y1="232" x2="548" y2="232" stroke="#FFFFFF" stroke-width="22" stroke-linecap="round"/>
+  <!-- flecha (con hueco sobre el borde del móvil) -->
+  <line x1="512" y1="310" x2="512" y2="740" stroke="#0F6E5C" stroke-width="96" stroke-linecap="round"/>
+  <line x1="512" y1="310" x2="512" y2="740" stroke="#7FD1BC" stroke-width="44" stroke-linecap="round"/>
+  <polyline points="420,652 512,744 604,652" fill="none" stroke="#7FD1BC" stroke-width="44" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- bandeja -->
+  <polyline points="292,700 292,816 732,816 732,700" fill="none" stroke="#FFFFFF" stroke-width="44" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

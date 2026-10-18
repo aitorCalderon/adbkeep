@@ -1,0 +1,47 @@
+# Checks on every push and pull request: Rust tests (core and the bindings export), the
+# Svelte type check and the frontend tests. Linux only: the core tests use a shell-script adb.
+name: CI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Tauri system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 8
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+
+      # tauri::generate_context! needs the built frontend (frontendDist).
+      - name: Build frontend
+        run: pnpm build
+      - name: Rust tests
+        run: cargo test --workspace
+      - name: Bindings are up to date
+        run: git diff --exit-code src/lib/bindings.ts
+      - name: Svelte check
+        run: pnpm check
+      - name: Frontend tests
+        run: pnpm test

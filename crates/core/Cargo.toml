@@ -1,0 +1,29 @@
+[package]
+name = "adbkeep-core"
+description = "Android backup/restore over adb root: platform-independent core of adbkeep"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+serde.workspace = true
+serde_json.workspace = true
+specta.workspace = true
+thiserror.workspace = true
+tokio.workspace = true
+which.workspace = true
+humantime = "2"
+rusqlite = { version = "0.37", features = ["bundled"] }
+sha2 = "0.10"
+tar = "0.4"
+base64 = "0.22"
+zstd = "0.13"
+age = "0.12"
+age-core = "0.12"
+fs4 = "0.13"
+
+[target.'cfg(target_os = "linux")'.dependencies]
+libc = "0.2"
+
+[dev-dependencies]
+tokio = { workspace = true, features = ["test-util"] }

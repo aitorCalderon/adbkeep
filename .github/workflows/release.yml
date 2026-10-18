@@ -1,0 +1,111 @@
+# Builds the installers with tauri-action and attaches them to a draft GitHub release:
+# AppImage, .deb and .rpm (Linux), .dmg (macOS, Apple silicon and Intel) and .msi/.exe (Windows).
+# Runs on a `v*` tag or by hand.
+#
+# Each build downloads Google's platform-tools for its own OS (see scripts/fetch-platform-tools.mjs
+# and docs/platform-tools-licence.md) and bundles the on-device helper built once from helper/.
+name: Release
+
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  helper:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+      - uses: android-actions/setup-android@v3
+        with:
+          packages: "platforms;android-36 build-tools;36.0.0"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      # build-helper.mjs only uses Node built-ins.
+      - run: node scripts/build-helper.mjs
+      - uses: actions/upload-artifact@v4
+        with:
+          name: helper-dex
+          path: src-tauri/resources/helper/adbkeep-helper.dex
+          if-no-files-found: error
+
+  bundle:
+    needs: helper
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - platform: ubuntu-22.04
+            os: linux
+            args: ""
+          - platform: macos-latest
+            os: darwin
+            args: "--target aarch64-apple-darwin"
+            rust-target: aarch64-apple-darwin
+          - platform: macos-latest
+            os: darwin
+            args: "--target x86_64-apple-darwin"
+            rust-target: x86_64-apple-darwin
+          - platform: windows-latest
+            os: windows
+            args: ""
+    runs-on: ${{ matrix.platform }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Tauri system dependencies
+        if: matrix.os == 'linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 8
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: ${{ matrix.rust-target }}
+      - uses: Swatinem/rust-cache@v2
+        with:
+          key: ${{ matrix.rust-target }}
+
+      # --force: never reuse an adb for another OS that may be in the checkout.
+      - name: platform-tools for ${{ matrix.os }}
+        run: node scripts/fetch-platform-tools.mjs ${{ matrix.os }} --force
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: helper-dex
+          path: src-tauri/resources/helper
+
+      - uses: tauri-apps/tauri-action@v0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tagName: ${{ github.ref_type == 'tag' && github.ref_name || '' }}
+          releaseName: "adbkeep ${{ github.ref_name }}"
+          releaseDraft: true
+          prerelease: false
+          args: ${{ matrix.args }}
+
+      # Manual runs have no tag to publish to: keep the installers as run artifacts.
+      - uses: actions/upload-artifact@v4
+        if: github.ref_type != 'tag'
+        with:
+          name: bundle-${{ matrix.os }}-${{ matrix.rust-target || 'x64' }}
+          path: target/**/release/bundle/
+          if-no-files-found: error

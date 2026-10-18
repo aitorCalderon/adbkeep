@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <title>AdbKeep (tamaños pequeños)</title>
+  <rect x="24" y="24" width="976" height="976" rx="200" fill="#0F6E5C"/>
+  <rect x="352" y="110" width="320" height="460" rx="64" fill="none" stroke="#FFFFFF" stroke-width="76"/>
+  <line x1="512" y1="270" x2="512" y2="760" stroke="#0F6E5C" stroke-width="170" stroke-linecap="round"/>
+  <line x1="512" y1="270" x2="512" y2="760" stroke="#7FD1BC" stroke-width="80" stroke-linecap="round"/>
+  <polyline points="380,630 512,762 644,630" fill="none" stroke="#7FD1BC" stroke-width="80" stroke-linecap="round" stroke-linejoin="round"/>
+  <polyline points="200,680 200,860 824,860 824,680" fill="none" stroke="#FFFFFF" stroke-width="80" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

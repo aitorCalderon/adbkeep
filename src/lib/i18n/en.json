@@ -1,0 +1,727 @@
+{
+  "app": {
+    "name": "adbkeep"
+  },
+  "nav": {
+    "backup": "Backup",
+    "restore": "Restore",
+    "library": "My backups"
+  },
+  "topbar": {
+    "advanced": "Advanced mode",
+    "preferences": "Preferences"
+  },
+  "device": {
+    "none": "No phone connected",
+    "openPanel": "Show connection details",
+    "android": "Android {version}",
+    "battery": "{level}%",
+    "charging": "charging",
+    "rootOk": "{root} ✔",
+    "free": "{size} free",
+    "serial": "Serial",
+    "rootMethod": "Method",
+    "sdk": "SDK {sdk}",
+    "build": "Build",
+    "sqlite3": "sqlite3"
+  },
+  "section": {
+    "comingSoon": "This section is not available yet."
+  },
+  "prefs": {
+    "title": "Preferences",
+    "backupDir": "Default backup folder",
+    "backupDirUnset": "Not chosen",
+    "choose": "Choose…",
+    "language": "Language",
+    "languageSystem": "Same as the computer",
+    "advanced": "Show technical details and fine-grained controls",
+    "adbPath": "adb executable",
+    "adbPathAuto": "Automatic",
+    "adbPathHint": "Leave empty to use the bundled adb, or the one in PATH.",
+    "adbStatus": "Status",
+    "close": "Close",
+    "adbSource": {
+      "custom": "chosen in Preferences",
+      "bundled": "bundled",
+      "system": "from PATH"
+    },
+    "theme": "Theme",
+    "themes": {"system": "System (light/dark)", "ocean": "Ocean", "forest": "Forest", "sunset": "Sunset", "lavender": "Lavender", "midnight": "Midnight (dark)", "graphite": "Graphite (dark)", "contrast": "High contrast"},
+    "systemFont": "Use the system font and size",
+    "systemFontHint": "Follows the desktop interface font. Turn off for the built-in look.",
+    "useHelper": "Use the helper on the phone",
+    "useHelperHint": "Copies a small program to /data/local/tmp/adbkeep on the phone while working and deletes it afterwards. It provides app names and icons; without it, package names are shown."
+  },
+  "log": {
+    "title": "Log",
+    "empty": "No commands run yet.",
+    "copy": "Copy",
+    "save": "Save…",
+    "clear": "Clear",
+    "filter": "Filter",
+    "exitCode": "exit {code}",
+    "streamed": "{size} streamed"
+  },
+  "error": {
+    "adbNotFound": "adb was not found. Choose its location in Preferences.",
+    "adbNotUsable": "adb at {path} does not work: {reason}",
+    "spawn": "Could not run {program}: {reason}",
+    "commandFailed": "The command failed (exit code {exit_code}).",
+    "io": "File error: {reason}",
+    "timeout": "Timed out ({seconds} s).",
+    "deviceUnavailable": "The phone is not available.",
+    "rootUnavailable": "There is no administrator access on the phone.",
+    "unexpectedOutput": "Unexpected output from {what}.",
+    "busy": "A backup or restore is already running.",
+    "cancelled": "Cancelled.",
+    "database": "Database error: {reason}",
+    "unsupportedFormat": "The backup uses a newer format ({version}) than this version of adbkeep.",
+    "notEnoughSpace": "Not enough space: {needed} needed, {available} free.",
+    "helperRequired": "The helper on the phone is needed (turn it on in Preferences).",
+    "notSupported": "Not possible (yet) in this case.",
+    "passwordRequired": "The backup is encrypted: enter its password.",
+    "wrongPassword": "Wrong password.",
+    "diskFull": "The PC disk is full. Free some space and resume the backup from My backups.",
+    "wrongDevice": "This backup was made from another phone ({expected}); connect that one to continue it."
+  },
+  "glossary": {
+    "simple": {
+      "root": "administrator access",
+      "keystore": "apps with protection tied to the phone",
+      "appData": "app data",
+      "appFiles": "app files",
+      "usbDebugging": "allow the computer to access the phone"
+    },
+    "advanced": {
+      "root": "root (su / adb root)",
+      "keystore": "apps using Android Keystore",
+      "appData": "CE/DE data (/data/data, /data/user_de)",
+      "appFiles": "Android/data, obb, media",
+      "usbDebugging": "USB debugging (adb authorization)"
+    }
+  },
+  "format": {
+    "apps": "{count, plural, one {# app} other {# apps}}"
+  },
+  "connection": {
+    "title": "Phone connection",
+    "choose": "Phone",
+    "retry": "Retry",
+    "continue": "Continue",
+    "state": {
+      "noAdb": "adb cannot be used",
+      "noDevice": "Connect your phone",
+      "noPermissions": "The computer is not allowed to use the phone",
+      "unauthorized": "Allow access on the phone",
+      "reauthorizeAfterAdbRoot": "Allow access on the phone again",
+      "connecting": "Connecting…",
+      "probing": "Reading the phone…",
+      "rootPending": "Grant administrator access on the phone",
+      "noRoot": "The phone has no administrator access",
+      "rootDenied": "Administrator access was denied",
+      "locked": "Unlock the phone",
+      "ready": "Phone ready",
+      "failed": "The phone could not be read"
+    },
+    "guide": {
+      "noAdb": "Open Preferences (⚙), turn on advanced mode and choose where adb is.",
+      "noDevice": [
+        "On the phone, open Settings › About phone and tap “Build number” 7 times to turn on Developer options.",
+        "In Settings › System › Developer options, turn on “USB debugging”.",
+        "Connect the phone to the computer with a USB data cable."
+      ],
+      "noPermissions": "On Linux the phone needs udev rules (package “android-sdk-platform-tools-common” or similar) and your user must be in the “plugdev” group. Then unplug and plug the cable again.",
+      "unauthorized": "Accept the “Allow USB debugging?” prompt on the phone. Tick “Always allow from this computer” so you don't have to repeat it.",
+      "reauthorizeAfterAdbRoot": "Turning on adb root mode restarts the connection, and the phone asks to authorize this computer again. Accept the prompt on the phone.",
+      "connecting": "If it takes long, unplug and plug the cable again.",
+      "rootPending": "A Magisk, KernelSU or similar prompt will appear on the phone. Tap “Grant”.",
+      "noRoot": "adbkeep needs administrator access to back up app data. There are two ways to get it:",
+      "noRootSu": "Root the phone with Magisk, KernelSU or similar.",
+      "noRootAdb": "On LineageOS and similar ROMs: Developer options › “Rooted debugging”.",
+      "useAdbRoot": "Turn on adb root mode",
+      "rootDenied": "Open Magisk (or your root app) on the phone, allow access for “Shell” and press Retry.",
+      "locked": "Unlock the phone with your PIN, pattern or fingerprint. Until it has been unlocked once after starting, app data cannot be read.",
+      "failed": "Check the cable and press Retry."
+    },
+    "summary": "{model} · Android {version}",
+    "tools": "Tools on the phone",
+    "users": "Users and profiles",
+    "userRunning": "running",
+    "rootMethods": "Access method",
+    "rootMethod": {
+      "su": "su ({provider})",
+      "adbRoot": "adb root"
+    }
+  },
+  "backup": {
+    "tabs": {
+      "user": "User apps",
+      "system": "System apps",
+      "other": "Everything else",
+      "warnings": "Warnings",
+      "result": "Result"
+    },
+    "analysis": {
+      "running": "Analysing the phone…",
+      "stage": {
+        "packages": "Looking for apps…",
+        "sizes": "Measuring sizes…",
+        "permissions": "Reading permissions…",
+        "keystore": "Looking for apps with protection tied to the phone…",
+        "done": "",
+        "labels": "Reading names and icons…",
+        "other": "Counting messages, contacts and files…"
+      },
+      "stageFailed": "A step of the analysis could not be completed: {error}",
+      "retry": "Analyse again"
+    },
+    "apps": {
+      "empty": "There are no user apps.",
+      "search": "Search",
+      "sortName": "Name",
+      "sortSize": "Size",
+      "onlyWarnings": "Only with warnings",
+      "all": "All",
+      "none": "None",
+      "dataAll": "Data for all",
+      "dataNone": "Data for none",
+      "permsAll": "Permissions for all",
+      "permsNone": "Permissions for none",
+      "copyApp": "Back up app",
+      "includeData": "Include data",
+      "permissions": "Permissions",
+      "selected": "{apps, plural, one {# app} other {# apps}} · {size}",
+      "keystoreWarning": "Its data may not work on another phone; use the app's own backup.",
+      "columns": {
+        "package": "Package",
+        "version": "Version",
+        "apk": "APK",
+        "data": "Data",
+        "splits": "Splits",
+        "size": "Size"
+      },
+      "permCount": "{perms, plural, one {# permission} other {# permissions}} · {ops, plural, one {# AppOp} other {# AppOps}}",
+      "permDetail": {
+        "runtime": "Permissions",
+        "appOps": "Special permissions (AppOps)",
+        "special": "Special access",
+        "roles": "Default app"
+      },
+      "parts": {
+        "ce": "CE (/data/data)",
+        "de": "DE (/data/user_de)",
+        "extData": "Android/data",
+        "obb": "Android/obb",
+        "media": "Android/media"
+      },
+      "options": "Options",
+      "includeNoBackup": "Include no_backup/ (tokens and install IDs; rarely useful on another phone)",
+      "status": {
+        "pending": "Pending",
+        "running": "Copying…",
+        "done": "Done",
+        "error": "Error"
+      },
+      "partsShort": {
+        "ce": "CE",
+        "de": "DE",
+        "extData": "data",
+        "obb": "obb",
+        "media": "media"
+      },
+      "systemNote": "These apps only restore well on a phone of the same brand or that already has them.",
+      "excluded": "Not backed up",
+      "exclusion": {
+        "fixedList": "Tied to the phone or the Google account; copying it can break things.",
+        "systemSharedUser": "Shares its identity with the system ({sharedUser})."
+      },
+      "exclusionTech": {
+        "fixedList": "fixed exclusion list",
+        "systemSharedUser": "sharedUserId {sharedUser}"
+      },
+      "force": "Force",
+      "confirmForce": "“{pkg}” is excluded because restoring it may cause problems. Include it anyway?",
+      "forced": "Forced",
+      "columns2": {
+        "sharedUser": "sharedUserId",
+        "signature": "Signature",
+        "codePath": "codePath"
+      },
+      "emptySystem": "There are no updated system apps."
+    },
+    "roles": {
+      "SMS": "Default SMS app",
+      "DIALER": "Default phone app",
+      "BROWSER": "Default browser",
+      "HOME": "Default home app",
+      "ASSISTANT": "Default assistant",
+      "keyboard": "Active keyboard"
+    },
+    "special": {
+      "notificationListener": "Notification access",
+      "accessibility": "Accessibility",
+      "inputMethod": "Keyboard",
+      "batteryUnrestricted": "Unrestricted battery",
+      "deviceAdmin": "Device admin"
+    },
+    "warnings": {
+      "keystoreTitle": "Apps with protection tied to the phone",
+      "keystoreText": "Their data may not work on another phone. Also use each app's own backup.",
+      "keystoreNone": "No user app uses this protection.",
+      "accountsTitle": "Configured accounts",
+      "accountsText": "You will need to sign in to these accounts again on the new phone. Their contacts and calendars will sync by themselves.",
+      "accountsNone": "There are no accounts.",
+      "notCopiedTitle": "What cannot be backed up",
+      "notCopied": {
+        "accounts": "Accounts and sessions: tied to the phone; you need to sign in again.",
+        "bluetooth": "Bluetooth devices: they need to be paired again.",
+        "lock": "Screen lock, fingerprints and face: tied to the phone's hardware.",
+        "drm": "DRM licences and protected keys: tied to the hardware.",
+        "imei": "IMEI and phone calibration: unique to each device."
+      }
+    },
+    "action": {
+      "summary": "{apps, plural, one {# app} other {# apps}} ({withData} with data) · {size}",
+      "destination": "Destination",
+      "name": "Name",
+      "freeOnPc": "Free on the PC: {size}",
+      "noSpace": "Does not fit: {size} missing",
+      "pack": "Save as a single file",
+      "compression": "Compression",
+      "simulate": "Simulate only",
+      "start": "Back up",
+      "cancel": "Cancel",
+      "dontDisconnect": "Don't disconnect the phone",
+      "appsClosed": "Apps are closed while their data is copied.",
+      "progress": "{done} of {total}",
+      "packing": "Packing the backup…",
+      "speed": "{speed}/s",
+      "simulationTitle": "Commands that would run",
+      "close": "Close",
+      "copy": "Copy",
+      "summaryAll": "{apps, plural, one {# app} other {# apps}} ({withData} with data) · {categories, plural, one {# category} other {# categories}} · {size}",
+      "encrypt": "Encrypt with a password",
+      "password": "Password",
+      "passwordRepeat": "Repeat the password",
+      "passwordMismatch": "The passwords do not match",
+      "passwordHelp": "Without the password the backup cannot be opened or restored. adbkeep does not store it.",
+      "resuming": "Continuing the backup “{name}”: only what was missing is copied.",
+      "resume": "Resume backup",
+      "resumeCancel": "New backup",
+      "paused": {
+        "disconnected": "The phone was disconnected. Connect it again (and allow the PC or root access if asked) to continue.",
+        "locked": "Unlock the phone to continue."
+      },
+      "pausedCancel": "Discard"
+    },
+    "result": {
+      "done": "Backup finished",
+      "doneWithErrors": "Backup finished with errors",
+      "cancelled": "Backup cancelled",
+      "failed": "The backup could not be made",
+      "summary": "{apps, plural, one {# app} other {# apps}} · {size} on the PC · {time}",
+      "errors": "Errors",
+      "openFolder": "Open folder",
+      "saveReport": "Save report",
+      "newBackup": "New backup",
+      "path": "Saved in"
+    },
+    "other": {
+      "groups": {
+        "communications": "Communications",
+        "organization": "Organisation",
+        "system": "System",
+        "files": "Files"
+      },
+      "items": {
+        "sms": "SMS/MMS messages",
+        "contacts": "Phone/SIM contacts",
+        "calls": "Call log",
+        "blocked": "Blocked numbers",
+        "calendar": "Local calendar",
+        "wifi": "Wi-Fi networks",
+        "settings": "Basic settings",
+        "notifications": "Notifications and Do Not Disturb",
+        "personal": "Ringtones, wallpaper and dictionary",
+        "certificates": "User certificates",
+        "sounds": "Ringtones",
+        "wallpaper": "Wallpaper",
+        "dictionary": "Dictionary",
+        "files": "Files"
+      },
+      "notes": {
+        "sms": "{messages, plural, one {# message} other {# messages}} in {threads, plural, one {# conversation} other {# conversations}}",
+        "contacts": "{count, plural, one {# contact} other {# contacts}}. Google contacts sync by themselves when you sign in.",
+        "calls": "{count, plural, one {# call} other {# calls}}",
+        "blocked": "{count, plural, one {# number} other {# numbers}}",
+        "calendar": "{count, plural, one {# event} other {# events}}. Google calendars sync by themselves.",
+        "wifi": "{count, plural, one {# network} other {# networks}}",
+        "settings": "Brightness, display, sounds, accessibility, keyboard…",
+        "notifications": "Each app's notification settings and Do Not Disturb.",
+        "personal": "Custom ringtones, wallpaper and dictionary words ({words, plural, one {# word} other {# words}}).",
+        "certificates": "{count, plural, one {# certificate} other {# certificates}}"
+      },
+      "needsHelper": "Needs the helper on the phone (Preferences).",
+      "nothing": "There is nothing to back up.",
+      "rootFiles": "Loose files",
+      "hidden": "internal folder",
+      "advanced": {
+        "accounts": "Contacts by account type",
+        "local": "on the phone",
+        "settingsTable": "Settings to restore",
+        "settingsHint": "All are saved; only the ticked ones are applied when restoring. The pre-ticked ones are common to every phone.",
+        "search": "Search setting",
+        "exclude": "Leave out of the files (comma-separated patterns)",
+        "method": "Messages, contacts and calendar are read with the helper on the phone (ContentResolver).",
+        "databases": "Databases found",
+        "users": "Only the main user is backed up; additional profiles not yet."
+      },
+      "wifiWarning": "The backup contains the Wi-Fi passwords unencrypted.",
+      "categories": "{count, plural, one {# category} other {# categories}}"
+    }
+  },
+  "library": {
+    "folder": "Folder",
+    "change": "Change…",
+    "refresh": "Refresh",
+    "empty": "There are no backups in this folder.",
+    "loading": "Reading backups…",
+    "select": "Choose a backup from the list.",
+    "packed": "Single file",
+    "status": {
+      "complete": "Complete",
+      "incomplete": "Incomplete",
+      "interrupted": "Interrupted",
+      "unreadable": "Unreadable",
+      "encrypted": "Encrypted"
+    },
+    "statusHelp": {
+      "incomplete": "The backup was cancelled or the phone was disconnected. It contains what was copied until then.",
+      "interrupted": "The backup stopped before finishing (the app was closed). It cannot be used, only deleted.",
+      "unreadable": "The contents of the backup cannot be read.",
+      "encrypted": "The backup is encrypted. Enter its password to see its contents, verify it or restore it.",
+      "incompleteResumable": "The backup was cancelled or cut off. It holds what was copied until then and can be resumed with the source phone connected."
+    },
+    "actions": {
+      "restore": "Restore",
+      "restoreSoon": "Restoring will come in an upcoming version.",
+      "verify": "Verify integrity",
+      "verifying": "Verifying… {done}/{total}",
+      "delete": "Delete",
+      "confirmDelete": "Delete the backup “{name}”? This cannot be undone.",
+      "pack": "Pack into a single file",
+      "unpack": "Unpack",
+      "working": "Working…",
+      "openFolder": "Open folder",
+      "resume": "Resume backup",
+      "resumeHelp": "Connect the source phone ({model}) to resume it.",
+      "restoreItem": "Restore…",
+      "restoreItemHelp": "Restore only this"
+    },
+    "verify": {
+      "ok": "Integrity OK: {count, plural, one {# file checked} other {# files checked}}.",
+      "bad": "{count, plural, one {# problem} other {# problems}} found:",
+      "problem": {
+        "missing": "missing",
+        "sizeMismatch": "different size",
+        "hashMismatch": "content changed",
+        "corrupt": "damaged archive",
+        "unexpected": "not in the index"
+      }
+    },
+    "tabs": {
+      "summary": "Summary",
+      "user": "User apps",
+      "system": "System apps",
+      "warnings": "Warnings",
+      "files": "Backup files",
+      "log": "Log",
+      "messages": "Messages",
+      "contacts": "Contacts",
+      "calls": "Calls",
+      "shared": "Files",
+      "wifi": "Wi-Fi",
+      "settings": "Settings"
+    },
+    "summary": {
+      "source": "Source phone",
+      "android": "Android {version} (SDK {sdk})",
+      "date": "Date",
+      "size": "Size",
+      "contents": "Contents",
+      "apps": "{apps, plural, one {# app} other {# apps}} ({withData} with data)",
+      "errors": "{count, plural, one {# error} other {# errors}} while backing up",
+      "location": "Location",
+      "other": "Other"
+    },
+    "apps": {
+      "none": "There are no apps in this backup.",
+      "version": "Version",
+      "data": "Data",
+      "permissions": "Permissions",
+      "apkOnly": "app only"
+    },
+    "files": {
+      "path": "File",
+      "size": "Size",
+      "binary": "Binary file: cannot be shown.",
+      "choose": "Choose a text file to view it."
+    },
+    "logEmpty": "The backup has no log.",
+    "view": {
+      "loading": "Reading…",
+      "search": "Search",
+      "noResults": "No results.",
+      "saved": "Saved to {path}",
+      "messages": {
+        "empty": "This backup has no messages.",
+        "count": "{count, plural, one {# message} other {# messages}}",
+        "choose": "Choose a conversation.",
+        "unknown": "Unknown number",
+        "attachment": "Attachment",
+        "show": "Show",
+        "save": "Save…",
+        "exportXml": "Export to XML…",
+        "xmlHelp": "SMS Backup & Restore XML: that app and compatible ones can import it.",
+        "exported": "{count, plural, one {# message exported} other {# messages exported}} to {path}"
+      },
+      "contacts": {
+        "empty": "This backup has no contacts.",
+        "choose": "Choose a contact.",
+        "exportVcf": "Export to .vcf…",
+        "exported": "{count, plural, one {# contact exported} other {# contacts exported}} to {path}",
+        "phoneAccount": "On the phone",
+        "starred": "Favourite",
+        "noName": "(no name)",
+        "kinds": {
+          "phone": "Phone",
+          "email": "Email",
+          "address": "Address",
+          "organization": "Company",
+          "website": "Website",
+          "nickname": "Nickname",
+          "event": "Date",
+          "im": "Messaging",
+          "relation": "Relation",
+          "sip": "SIP",
+          "note": "Note"
+        },
+        "types": {
+          "phone": {
+            "1": "home",
+            "2": "mobile",
+            "3": "work",
+            "4": "work fax",
+            "5": "home fax",
+            "7": "other",
+            "12": "main",
+            "17": "work mobile"
+          },
+          "email": {
+            "1": "home",
+            "2": "work",
+            "3": "other",
+            "4": "mobile"
+          },
+          "address": {
+            "1": "home",
+            "2": "work",
+            "3": "other"
+          },
+          "event": {
+            "1": "anniversary",
+            "2": "other",
+            "3": "birthday"
+          }
+        }
+      },
+      "calls": {
+        "empty": "This backup has no calls.",
+        "type": "Type",
+        "who": "Number",
+        "date": "Date",
+        "duration": "Duration",
+        "kinds": {
+          "1": "Incoming",
+          "2": "Outgoing",
+          "3": "Missed",
+          "4": "Voicemail",
+          "5": "Rejected",
+          "6": "Blocked",
+          "other": "Other"
+        }
+      },
+      "files": {
+        "empty": "This backup has no files.",
+        "root": "Loose files",
+        "up": "Up",
+        "name": "Name",
+        "size": "Size",
+        "date": "Modified",
+        "items": "{count, plural, one {# item} other {# items}}",
+        "emptyFolder": "Empty folder.",
+        "selected": "{count} selected",
+        "saveSelected": "Save to a folder…",
+        "saved": "{count, plural, one {# file saved} other {# files saved}} to {path}"
+      },
+      "wifi": {
+        "empty": "This backup has no Wi-Fi networks.",
+        "ssid": "Network",
+        "security": "Security",
+        "hidden": "hidden",
+        "password": "Password",
+        "show": "Show passwords",
+        "hide": "Hide passwords",
+        "none": "no password",
+        "securityNames": {
+          "open": "Open",
+          "owe": "Enhanced open (OWE)",
+          "wep": "WEP",
+          "wpa2": "WPA/WPA2",
+          "wpa3": "WPA3",
+          "enterprise": "Enterprise (802.1X)"
+        }
+      },
+      "settings": {
+        "empty": "This backup has no settings.",
+        "filter": "Filter",
+        "onlySelected": "Only those restored",
+        "table": "Table",
+        "key": "Key",
+        "value": "Value",
+        "selected": "Restored"
+      },
+      "raw": {
+        "save": "Save a copy…",
+        "archive": "Contents of the compressed file:"
+      }
+    },
+    "encrypted": "Encrypted",
+    "unlock": "Open",
+    "pack": {
+      "title": "Pack into one file",
+      "encrypt": "Encrypt with a password",
+      "start": "Pack",
+      "cancel": "Cancel"
+    }
+  },
+  "restore": {
+    "chooseBackup": "Backup",
+    "noBackups": "There are no backups in the backup folder. Make one first or choose another folder in My backups.",
+    "target": "Target phone",
+    "loading": "Checking what can be restored…",
+    "pickBackup": "Choose a backup to see what can be restored on this phone.",
+    "status": {
+      "ok": "Will be restored",
+      "limited": "With limitations",
+      "blocked": "Cannot be restored"
+    },
+    "why": "Why?",
+    "filter": "Status",
+    "filterAll": "All",
+    "restoreApp": "Restore app",
+    "restoreData": "Restore data",
+    "permissions": "Permissions",
+    "action": {
+      "install": "Will be installed",
+      "update": "Will be updated",
+      "dataOnly": "Already installed: data only",
+      "skip": "Skipped"
+    },
+    "reason": {
+      "minSdkTooHigh": "Needs a newer Android.",
+      "targetSdkTooLow": "Too old an app for Android 14 or later.",
+      "abiMismatch": "Made for another type of processor.",
+      "signatureMismatch": "Already on this phone with another signature.",
+      "noApk": "The backup has no app and it is not installed on this phone.",
+      "systemAppAsUser": "System app from another phone: installed as a normal app, it may not fully work.",
+      "keystore": "Its data depends on the source phone; it may ask to sign in again or not work.",
+      "installedNewer": "This phone already has a newer version; only data is restored.",
+      "roleTaken": "It will become the {role} instead of {holder}."
+    },
+    "reasonDetail": {
+      "minSdkTooHigh": "The app needs SDK {minSdk} and this phone has SDK {targetSdk}.",
+      "targetSdkTooLow": "The app targets SDK {appTargetSdk}; Android 14 blocks apps targeting SDK below 23.",
+      "abiMismatch": "The app uses {appAbi}; this phone supports {deviceAbis}.",
+      "signatureMismatch": "Android does not allow replacing an app signed by another developer.",
+      "noApk": "The backup was made without the app (data only).",
+      "systemAppAsUser": "System permissions are not granted to normal apps.",
+      "keystore": "Android Keystore keys never leave the phone where they were created.",
+      "installedNewer": "Installed: {installed} · backup: {backup}.",
+      "roleTaken": ""
+    },
+    "noData": "The backup has no data for this app, or the installed version is older than the backup's.",
+    "advanced": {
+      "versions": "versionCode backup → phone",
+      "signatures": "Signature backup / phone",
+      "minSdk": "minSdk / phone SDK",
+      "abi": "ABI",
+      "installAsPlay": "Install as if from Google Play (-i com.android.vending)",
+      "bypassTargetSdk": "Force old apps on Android 14+ (--bypass-low-target-sdk-block, unverified)",
+      "notInstalled": "not installed"
+    },
+    "checklist": {
+      "title": "Before starting",
+      "google": "Google account signed in on this phone (needed for Chrome and system apps).",
+      "battery": "Enough battery or charger connected.",
+      "unlocked": "Phone unlocked.",
+      "dontUse": "Don't use the phone while restoring."
+    },
+    "warningsTitle": "Compatibility warnings",
+    "noWarnings": "All chosen apps are restored without limitations.",
+    "start": "Restore",
+    "summary": "{apps, plural, one {# app} other {# apps}} ({withData} with data)",
+    "dataRestoreNote": "Apps are closed while their data is restored.",
+    "unpacking": "Preparing the backup…",
+    "result": {
+      "done": "Restore finished",
+      "doneWithErrors": "Restore finished with errors",
+      "cancelled": "Restore cancelled",
+      "failed": "The restore failed",
+      "summary": "{apps, plural, one {# app} other {# apps}} · {time}",
+      "pendingTitle": "Pending tasks",
+      "accounts": "Sign in again to these accounts: {list}.",
+      "bluetooth": "Pair your Bluetooth devices again.",
+      "lock": "Set up the screen lock and fingerprints.",
+      "keystore": "Restore these apps with their own backup: {list}.",
+      "notifications": "Open each restored app once so its notification settings apply.",
+      "reboot": "Restart the phone.",
+      "export": "Export list",
+      "perApp": "Per-app details",
+      "uid": "New UID",
+      "failedPermissions": "Permissions that failed",
+      "parts": "Data restored",
+      "newRestore": "New restore",
+      "vcf": "Open the contacts file in the Contacts app to import them (it is in Download/adbkeep-contacts.vcf).",
+      "wallpaper": "Set Pictures/adbkeep-wallpaper.png as your wallpaper.",
+      "otherTitle": "Everything else",
+      "otherDone": "{done} done · {failed} failed"
+    },
+    "roleNames": {
+      "SMS": "default SMS app",
+      "DIALER": "default phone app",
+      "BROWSER": "default browser",
+      "HOME": "default home app",
+      "ASSISTANT": "default assistant"
+    },
+    "other": {
+      "reason": {
+        "empty": "The backup has nothing of this.",
+        "helperRequired": "Needs the helper on the phone (Preferences).",
+        "notSupported": "Not restored yet; it stays saved in the backup.",
+        "mmsNotRestored": "The backup's MMS are not restored yet; only the SMS.",
+        "wifiNeedsAndroid11": "This phone needs Android 11 or later.",
+        "wifiSkipped": "{count, plural, one {# network} other {# networks}} (enterprise or with byte names) cannot be recreated.",
+        "wallpaperManual": "The image is copied to Pictures; you will need to set it as wallpaper yourself.",
+        "noWallpaperImage": "The backup has no wallpaper image (a built-in one was in use).",
+        "scanAfterRestart": "The files will appear after restarting the phone."
+      },
+      "contactsVcf": "Open the .vcf in the Contacts app instead of inserting them",
+      "settingsCount": "{count, plural, one {# setting} other {# settings}}",
+      "folders": "Folders"
+    },
+    "summaryAll": "{apps, plural, one {# app} other {# apps}} ({withData} with data) · {categories, plural, one {# category} other {# categories}}",
+    "only": "Only “{item}” is ticked. You can tick more in the tabs."
+  }
+}

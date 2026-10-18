@@ -1,0 +1,727 @@
+{
+  "app": {
+    "name": "adbkeep"
+  },
+  "nav": {
+    "backup": "Copia",
+    "restore": "Restaurar",
+    "library": "Mis copias"
+  },
+  "topbar": {
+    "advanced": "Modo avanzado",
+    "preferences": "Preferencias"
+  },
+  "device": {
+    "none": "Ningún móvil conectado",
+    "openPanel": "Ver detalles de la conexión",
+    "android": "Android {version}",
+    "battery": "{level} %",
+    "charging": "cargando",
+    "rootOk": "{root} ✔",
+    "free": "Libre {size}",
+    "serial": "Serie",
+    "rootMethod": "Método",
+    "sdk": "SDK {sdk}",
+    "build": "Build",
+    "sqlite3": "sqlite3"
+  },
+  "section": {
+    "comingSoon": "Esta sección aún no está disponible."
+  },
+  "prefs": {
+    "title": "Preferencias",
+    "backupDir": "Carpeta de copias por defecto",
+    "backupDirUnset": "Sin elegir",
+    "choose": "Elegir…",
+    "language": "Idioma",
+    "languageSystem": "El del ordenador",
+    "advanced": "Mostrar detalles técnicos y control fino",
+    "adbPath": "Ejecutable de adb",
+    "adbPathAuto": "Automático",
+    "adbPathHint": "Déjalo vacío para usar el adb incluido o el del PATH.",
+    "adbStatus": "Estado",
+    "close": "Cerrar",
+    "adbSource": {
+      "custom": "elegido en Preferencias",
+      "bundled": "incluido",
+      "system": "del PATH"
+    },
+    "theme": "Tema",
+    "themes": {"system": "Sistema (claro/oscuro)", "ocean": "Océano", "forest": "Bosque", "sunset": "Atardecer", "lavender": "Lavanda", "midnight": "Medianoche (oscuro)", "graphite": "Grafito (oscuro)", "contrast": "Alto contraste"},
+    "systemFont": "Usar la tipografía y el tamaño del sistema",
+    "systemFontHint": "Sigue la fuente de interfaz del escritorio. Desactívalo para el aspecto propio de la app.",
+    "useHelper": "Usar el ayudante en el móvil",
+    "useHelperHint": "Copia un pequeño programa a /data/local/tmp/adbkeep del móvil mientras trabaja y lo borra al terminar. Da los nombres e iconos de las apps; sin él se ven los nombres de paquete."
+  },
+  "log": {
+    "title": "Registro",
+    "empty": "Aún no se ha ejecutado ningún comando.",
+    "copy": "Copiar",
+    "save": "Guardar…",
+    "clear": "Vaciar",
+    "filter": "Filtrar",
+    "exitCode": "salida {code}",
+    "streamed": "{size} transferidos"
+  },
+  "error": {
+    "adbNotFound": "No se encuentra adb. Elige dónde está en Preferencias.",
+    "adbNotUsable": "El adb de {path} no funciona: {reason}",
+    "spawn": "No se pudo ejecutar {program}: {reason}",
+    "commandFailed": "El comando ha fallado (código de salida {exit_code}).",
+    "io": "Error de archivo: {reason}",
+    "timeout": "Tiempo de espera agotado ({seconds} s).",
+    "deviceUnavailable": "El móvil no está disponible.",
+    "rootUnavailable": "No hay acceso de administrador en el móvil.",
+    "unexpectedOutput": "Respuesta inesperada de {what}.",
+    "busy": "Ya hay una copia o restauración en marcha.",
+    "cancelled": "Cancelado.",
+    "database": "Error de base de datos: {reason}",
+    "unsupportedFormat": "La copia usa un formato más nuevo ({version}) que esta versión de adbkeep.",
+    "notEnoughSpace": "No hay espacio suficiente: hacen falta {needed} y hay {available} libres.",
+    "helperRequired": "Hace falta el ayudante en el móvil (actívalo en Preferencias).",
+    "notSupported": "No se puede (todavía) en este caso.",
+    "passwordRequired": "La copia está cifrada: escribe su contraseña.",
+    "wrongPassword": "La contraseña no es correcta.",
+    "diskFull": "Se ha llenado el disco del PC. Libera espacio y reanuda la copia desde Mis copias.",
+    "wrongDevice": "Esta copia se hizo desde otro móvil ({expected}); conecta ese para continuarla."
+  },
+  "glossary": {
+    "simple": {
+      "root": "acceso de administrador",
+      "keystore": "apps con protección ligada al móvil",
+      "appData": "datos de la app",
+      "appFiles": "archivos de la app",
+      "usbDebugging": "permitir que el PC acceda al móvil"
+    },
+    "advanced": {
+      "root": "root (su / adb root)",
+      "keystore": "apps que usan Android Keystore",
+      "appData": "datos CE/DE (/data/data, /data/user_de)",
+      "appFiles": "Android/data, obb, media",
+      "usbDebugging": "depuración USB (autorización de adb)"
+    }
+  },
+  "format": {
+    "apps": "{count, plural, one {# app} other {# apps}}"
+  },
+  "connection": {
+    "title": "Conexión del móvil",
+    "choose": "Móvil",
+    "retry": "Reintentar",
+    "continue": "Continuar",
+    "state": {
+      "noAdb": "No se puede usar adb",
+      "noDevice": "Conecta el móvil",
+      "noPermissions": "El ordenador no tiene permiso para usar el móvil",
+      "unauthorized": "Permite el acceso en el móvil",
+      "reauthorizeAfterAdbRoot": "Vuelve a permitir el acceso en el móvil",
+      "connecting": "Conectando…",
+      "probing": "Leyendo el móvil…",
+      "rootPending": "Concede el acceso de administrador en el móvil",
+      "noRoot": "El móvil no tiene acceso de administrador",
+      "rootDenied": "Se ha denegado el acceso de administrador",
+      "locked": "Desbloquea el móvil",
+      "ready": "Móvil listo",
+      "failed": "No se ha podido leer el móvil"
+    },
+    "guide": {
+      "noAdb": "Abre Preferencias (⚙), activa el modo avanzado y elige dónde está adb.",
+      "noDevice": [
+        "En el móvil, abre Ajustes › Información del teléfono y toca 7 veces «Número de compilación» para activar las Opciones de desarrollador.",
+        "En Ajustes › Sistema › Opciones de desarrollador, activa la «Depuración USB».",
+        "Conecta el móvil al ordenador con un cable USB de datos."
+      ],
+      "noPermissions": "En Linux hacen falta reglas udev para el móvil (paquete «android-sdk-platform-tools-common» o similar) y que tu usuario esté en el grupo «plugdev». Después, desconecta y vuelve a conectar el cable.",
+      "unauthorized": "Acepta el aviso «¿Permitir depuración USB?» en el móvil. Marca «Permitir siempre desde este ordenador» para no tener que repetirlo.",
+      "reauthorizeAfterAdbRoot": "Al activar el modo root de adb, el móvil reinicia la conexión y vuelve a pedir que autorices este ordenador. Acepta el aviso en el móvil.",
+      "connecting": "Si tarda, desconecta y vuelve a conectar el cable.",
+      "rootPending": "Aparecerá un aviso de Magisk, KernelSU o similar en el móvil. Pulsa «Conceder».",
+      "noRoot": "adbkeep necesita acceso de administrador para copiar los datos de las apps. Puedes conseguirlo de dos formas:",
+      "noRootSu": "Rootear el móvil con Magisk, KernelSU o similar.",
+      "noRootAdb": "En LineageOS y ROMs parecidas: Opciones de desarrollador › «Depuración con root».",
+      "useAdbRoot": "Activar modo root de adb",
+      "rootDenied": "Abre Magisk (o la app de root que uses) en el móvil, permite el acceso a «Shell» y pulsa Reintentar.",
+      "locked": "Desbloquea el móvil con tu PIN, patrón o huella. Hasta que no se desbloquea por primera vez tras encenderlo, los datos de las apps no se pueden leer.",
+      "failed": "Comprueba el cable y pulsa Reintentar."
+    },
+    "summary": "{model} · Android {version}",
+    "tools": "Herramientas en el móvil",
+    "users": "Usuarios y perfiles",
+    "userRunning": "en marcha",
+    "rootMethods": "Método de acceso",
+    "rootMethod": {
+      "su": "su ({provider})",
+      "adbRoot": "adb root"
+    }
+  },
+  "backup": {
+    "tabs": {
+      "user": "Apps de usuario",
+      "system": "Apps de sistema",
+      "other": "Resto",
+      "warnings": "Avisos",
+      "result": "Resultado"
+    },
+    "analysis": {
+      "running": "Analizando el móvil…",
+      "stage": {
+        "packages": "Buscando apps…",
+        "sizes": "Midiendo tamaños…",
+        "permissions": "Leyendo permisos…",
+        "keystore": "Buscando apps con protección ligada al móvil…",
+        "done": "",
+        "labels": "Leyendo nombres e iconos…",
+        "other": "Contando mensajes, contactos y archivos…"
+      },
+      "stageFailed": "No se pudo completar un paso del análisis: {error}",
+      "retry": "Volver a analizar"
+    },
+    "apps": {
+      "empty": "No hay apps de usuario.",
+      "search": "Buscar",
+      "sortName": "Nombre",
+      "sortSize": "Tamaño",
+      "onlyWarnings": "Sólo con aviso",
+      "all": "Todas",
+      "none": "Ninguna",
+      "dataAll": "Datos en todas",
+      "dataNone": "Datos en ninguna",
+      "permsAll": "Permisos en todas",
+      "permsNone": "Permisos en ninguna",
+      "copyApp": "Copiar app",
+      "includeData": "Incluir datos",
+      "permissions": "Permisos",
+      "selected": "{apps, plural, one {# app} other {# apps}} · {size}",
+      "keystoreWarning": "Puede que sus datos no funcionen en otro móvil; usa la copia propia de la app.",
+      "columns": {
+        "package": "Paquete",
+        "version": "Versión",
+        "apk": "APK",
+        "data": "Datos",
+        "splits": "Splits",
+        "size": "Tamaño"
+      },
+      "permCount": "{perms, plural, one {# permiso} other {# permisos}} · {ops, plural, one {# AppOp} other {# AppOps}}",
+      "permDetail": {
+        "runtime": "Permisos",
+        "appOps": "Permisos especiales (AppOps)",
+        "special": "Accesos especiales",
+        "roles": "App por defecto"
+      },
+      "parts": {
+        "ce": "CE (/data/data)",
+        "de": "DE (/data/user_de)",
+        "extData": "Android/data",
+        "obb": "Android/obb",
+        "media": "Android/media"
+      },
+      "options": "Opciones",
+      "includeNoBackup": "Incluir no_backup/ (tokens e IDs de instalación; no suelen servir en otro móvil)",
+      "status": {
+        "pending": "Pendiente",
+        "running": "Copiando…",
+        "done": "Hecho",
+        "error": "Error"
+      },
+      "partsShort": {
+        "ce": "CE",
+        "de": "DE",
+        "extData": "data",
+        "obb": "obb",
+        "media": "media"
+      },
+      "systemNote": "Estas apps sólo se restauran bien en un móvil de la misma marca o que ya las tenga.",
+      "excluded": "No se copia",
+      "exclusion": {
+        "fixedList": "Va ligada al móvil o a la cuenta de Google; copiarla puede romper cosas.",
+        "systemSharedUser": "Comparte identidad con el sistema ({sharedUser})."
+      },
+      "exclusionTech": {
+        "fixedList": "lista fija de exclusión",
+        "systemSharedUser": "sharedUserId {sharedUser}"
+      },
+      "force": "Forzar",
+      "confirmForce": "«{pkg}» está excluida porque copiarla puede dar problemas al restaurarla. ¿Incluirla de todos modos?",
+      "forced": "Forzada",
+      "columns2": {
+        "sharedUser": "sharedUserId",
+        "signature": "Firma",
+        "codePath": "codePath"
+      },
+      "emptySystem": "No hay apps de sistema actualizadas."
+    },
+    "roles": {
+      "SMS": "App de SMS por defecto",
+      "DIALER": "Teléfono por defecto",
+      "BROWSER": "Navegador por defecto",
+      "HOME": "Pantalla de inicio por defecto",
+      "ASSISTANT": "Asistente por defecto",
+      "keyboard": "Teclado activo"
+    },
+    "special": {
+      "notificationListener": "Lectura de notificaciones",
+      "accessibility": "Accesibilidad",
+      "inputMethod": "Teclado",
+      "batteryUnrestricted": "Sin restricción de batería",
+      "deviceAdmin": "Administrador del dispositivo"
+    },
+    "warnings": {
+      "keystoreTitle": "Apps con protección ligada al móvil",
+      "keystoreText": "Sus datos pueden no funcionar en otro móvil. Usa también la copia de seguridad propia de cada app.",
+      "keystoreNone": "Ninguna app de usuario usa esta protección.",
+      "accountsTitle": "Cuentas configuradas",
+      "accountsText": "En el móvil nuevo tendrás que volver a entrar en estas cuentas. Sus contactos y calendarios se sincronizarán solos.",
+      "accountsNone": "No hay cuentas configuradas.",
+      "notCopiedTitle": "Lo que no se puede copiar",
+      "notCopied": {
+        "accounts": "Cuentas y sesiones: van ligadas al móvil; hay que volver a entrar.",
+        "bluetooth": "Dispositivos Bluetooth: hay que volver a emparejarlos.",
+        "lock": "Bloqueo de pantalla, huellas y cara: van ligados al hardware del móvil.",
+        "drm": "Licencias DRM y claves protegidas: van ligadas al hardware.",
+        "imei": "IMEI y calibración del móvil: son únicos de cada aparato."
+      }
+    },
+    "action": {
+      "summary": "{apps, plural, one {# app} other {# apps}} ({withData} con datos) · {size}",
+      "destination": "Destino",
+      "name": "Nombre",
+      "freeOnPc": "Libre en el PC: {size}",
+      "noSpace": "No cabe: faltan {size}",
+      "pack": "Guardar como un único fichero",
+      "compression": "Compresión",
+      "simulate": "Sólo simular",
+      "start": "Hacer copia",
+      "cancel": "Cancelar",
+      "dontDisconnect": "No desconectes el móvil",
+      "appsClosed": "Las apps se cierran mientras se copian sus datos.",
+      "progress": "{done} de {total}",
+      "packing": "Empaquetando la copia…",
+      "speed": "{speed}/s",
+      "simulationTitle": "Comandos que se ejecutarían",
+      "close": "Cerrar",
+      "copy": "Copiar",
+      "summaryAll": "{apps, plural, one {# app} other {# apps}} ({withData} con datos) · {categories, plural, one {# categoría} other {# categorías}} · {size}",
+      "encrypt": "Cifrar con contraseña",
+      "password": "Contraseña",
+      "passwordRepeat": "Repite la contraseña",
+      "passwordMismatch": "Las contraseñas no coinciden",
+      "passwordHelp": "Sin la contraseña no se podrá abrir ni restaurar la copia. adbkeep no la guarda.",
+      "resuming": "Continuando la copia «{name}»: se copia sólo lo que faltaba.",
+      "resume": "Reanudar copia",
+      "resumeCancel": "Copia nueva",
+      "paused": {
+        "disconnected": "Se ha desconectado el móvil. Vuelve a conectarlo (y autoriza el PC o el acceso de administrador si lo pide) para continuar.",
+        "locked": "Desbloquea el móvil para continuar."
+      },
+      "pausedCancel": "Descartar"
+    },
+    "result": {
+      "done": "Copia terminada",
+      "doneWithErrors": "Copia terminada con errores",
+      "cancelled": "Copia cancelada",
+      "failed": "No se pudo hacer la copia",
+      "summary": "{apps, plural, one {# app} other {# apps}} · {size} en el PC · {time}",
+      "errors": "Errores",
+      "openFolder": "Abrir carpeta",
+      "saveReport": "Guardar informe",
+      "newBackup": "Nueva copia",
+      "path": "Guardada en"
+    },
+    "other": {
+      "groups": {
+        "communications": "Comunicaciones",
+        "organization": "Organización",
+        "system": "Sistema",
+        "files": "Archivos"
+      },
+      "items": {
+        "sms": "Mensajes SMS/MMS",
+        "contacts": "Contactos del teléfono/SIM",
+        "calls": "Registro de llamadas",
+        "blocked": "Números bloqueados",
+        "calendar": "Calendario local",
+        "wifi": "Redes Wi-Fi",
+        "settings": "Ajustes básicos",
+        "notifications": "Notificaciones y No molestar",
+        "personal": "Tonos, fondo de pantalla y diccionario",
+        "certificates": "Certificados de usuario",
+        "sounds": "Tonos",
+        "wallpaper": "Fondo de pantalla",
+        "dictionary": "Diccionario",
+        "files": "Archivos"
+      },
+      "notes": {
+        "sms": "{messages, plural, one {# mensaje} other {# mensajes}} en {threads, plural, one {# conversación} other {# conversaciones}}",
+        "contacts": "{count, plural, one {# contacto} other {# contactos}}. Los contactos de Google se sincronizan solos al iniciar sesión.",
+        "calls": "{count, plural, one {# llamada} other {# llamadas}}",
+        "blocked": "{count, plural, one {# número} other {# números}}",
+        "calendar": "{count, plural, one {# evento} other {# eventos}}. Los calendarios de Google se sincronizan solos.",
+        "wifi": "{count, plural, one {# red} other {# redes}}",
+        "settings": "Brillo, pantalla, sonidos, accesibilidad, teclado…",
+        "notifications": "Ajustes de notificaciones de cada app y del modo No molestar.",
+        "personal": "Tonos personalizados, fondo de pantalla y palabras del diccionario ({words, plural, one {# palabra} other {# palabras}}).",
+        "certificates": "{count, plural, one {# certificado} other {# certificados}}"
+      },
+      "needsHelper": "Necesita el ayudante en el móvil (Preferencias).",
+      "nothing": "No hay nada que copiar.",
+      "rootFiles": "Archivos sueltos",
+      "hidden": "carpeta interna",
+      "advanced": {
+        "accounts": "Contactos por tipo de cuenta",
+        "local": "del teléfono",
+        "settingsTable": "Ajustes que se restaurarán",
+        "settingsHint": "Se guardan todos; sólo los marcados se aplicarán al restaurar. Los premarcados son comunes a todos los móviles.",
+        "search": "Buscar ajuste",
+        "exclude": "Excluir de los archivos (patrones separados por comas)",
+        "method": "Extracción de mensajes, contactos y calendario: ayudante en el móvil (ContentResolver).",
+        "databases": "Bases de datos encontradas",
+        "users": "Sólo se copia el usuario principal; los perfiles adicionales todavía no."
+      },
+      "wifiWarning": "La copia contiene las contraseñas Wi-Fi sin cifrar.",
+      "categories": "{count, plural, one {# categoría} other {# categorías}}"
+    }
+  },
+  "library": {
+    "folder": "Carpeta",
+    "change": "Cambiar…",
+    "refresh": "Actualizar",
+    "empty": "No hay copias en esta carpeta.",
+    "loading": "Leyendo copias…",
+    "select": "Elige una copia de la lista.",
+    "packed": "Un fichero",
+    "status": {
+      "complete": "Completa",
+      "incomplete": "Incompleta",
+      "interrupted": "Interrumpida",
+      "unreadable": "No se puede leer",
+      "encrypted": "Cifrada"
+    },
+    "statusHelp": {
+      "incomplete": "La copia se canceló o se desconectó el móvil. Contiene lo que se copió hasta entonces.",
+      "interrupted": "La copia se cortó antes de terminar (la app se cerró). No se puede usar; sólo borrar.",
+      "unreadable": "No se puede leer el contenido de la copia.",
+      "encrypted": "La copia está cifrada. Escribe su contraseña para ver su contenido, verificarla o restaurarla.",
+      "incompleteResumable": "La copia se canceló o se cortó. Contiene lo que se copió hasta entonces y se puede reanudar con el móvil de origen conectado."
+    },
+    "actions": {
+      "restore": "Restaurar",
+      "restoreSoon": "La restauración llegará en una próxima versión.",
+      "verify": "Verificar integridad",
+      "verifying": "Verificando… {done}/{total}",
+      "delete": "Borrar",
+      "confirmDelete": "¿Borrar la copia «{name}»? No se puede deshacer.",
+      "pack": "Empaquetar en un fichero",
+      "unpack": "Desempaquetar",
+      "working": "Trabajando…",
+      "openFolder": "Abrir carpeta",
+      "resume": "Reanudar copia",
+      "resumeHelp": "Conecta el móvil de origen ({model}) para reanudarla.",
+      "restoreItem": "Restaurar…",
+      "restoreItemHelp": "Restaurar sólo esto"
+    },
+    "verify": {
+      "ok": "Integridad correcta: {count, plural, one {# fichero comprobado} other {# ficheros comprobados}}.",
+      "bad": "{count, plural, one {# problema} other {# problemas}} encontrados:",
+      "problem": {
+        "missing": "falta",
+        "sizeMismatch": "tamaño distinto",
+        "hashMismatch": "contenido alterado",
+        "corrupt": "archivo dañado",
+        "unexpected": "no figura en el índice"
+      }
+    },
+    "tabs": {
+      "summary": "Resumen",
+      "user": "Apps de usuario",
+      "system": "Apps de sistema",
+      "warnings": "Avisos",
+      "files": "Ficheros de la copia",
+      "log": "Registro",
+      "messages": "Mensajes",
+      "contacts": "Contactos",
+      "calls": "Llamadas",
+      "shared": "Archivos",
+      "wifi": "Wi-Fi",
+      "settings": "Ajustes"
+    },
+    "summary": {
+      "source": "Móvil de origen",
+      "android": "Android {version} (SDK {sdk})",
+      "date": "Fecha",
+      "size": "Tamaño",
+      "contents": "Contenido",
+      "apps": "{apps, plural, one {# app} other {# apps}} ({withData} con datos)",
+      "errors": "{count, plural, one {# error} other {# errores}} al hacer la copia",
+      "location": "Ubicación",
+      "other": "Resto"
+    },
+    "apps": {
+      "none": "No hay apps en esta copia.",
+      "version": "Versión",
+      "data": "Datos",
+      "permissions": "Permisos",
+      "apkOnly": "sólo app"
+    },
+    "files": {
+      "path": "Fichero",
+      "size": "Tamaño",
+      "binary": "Fichero binario: no se puede mostrar.",
+      "choose": "Elige un fichero de texto para verlo."
+    },
+    "logEmpty": "La copia no tiene registro.",
+    "view": {
+      "loading": "Leyendo…",
+      "search": "Buscar",
+      "noResults": "Sin resultados.",
+      "saved": "Guardado en {path}",
+      "messages": {
+        "empty": "La copia no tiene mensajes.",
+        "count": "{count, plural, one {# mensaje} other {# mensajes}}",
+        "choose": "Elige una conversación.",
+        "unknown": "Número desconocido",
+        "attachment": "Adjunto",
+        "show": "Ver",
+        "save": "Guardar…",
+        "exportXml": "Exportar a XML…",
+        "xmlHelp": "XML de SMS Backup & Restore: lo importan esa app y otras compatibles.",
+        "exported": "{count, plural, one {# mensaje exportado} other {# mensajes exportados}} a {path}"
+      },
+      "contacts": {
+        "empty": "La copia no tiene contactos.",
+        "choose": "Elige un contacto.",
+        "exportVcf": "Exportar a .vcf…",
+        "exported": "{count, plural, one {# contacto exportado} other {# contactos exportados}} a {path}",
+        "phoneAccount": "En el teléfono",
+        "starred": "Favorito",
+        "noName": "(sin nombre)",
+        "kinds": {
+          "phone": "Teléfono",
+          "email": "Correo",
+          "address": "Dirección",
+          "organization": "Empresa",
+          "website": "Web",
+          "nickname": "Apodo",
+          "event": "Fecha",
+          "im": "Mensajería",
+          "relation": "Relación",
+          "sip": "SIP",
+          "note": "Nota"
+        },
+        "types": {
+          "phone": {
+            "1": "casa",
+            "2": "móvil",
+            "3": "trabajo",
+            "4": "fax del trabajo",
+            "5": "fax de casa",
+            "7": "otro",
+            "12": "principal",
+            "17": "móvil del trabajo"
+          },
+          "email": {
+            "1": "casa",
+            "2": "trabajo",
+            "3": "otro",
+            "4": "móvil"
+          },
+          "address": {
+            "1": "casa",
+            "2": "trabajo",
+            "3": "otra"
+          },
+          "event": {
+            "1": "aniversario",
+            "2": "otra",
+            "3": "cumpleaños"
+          }
+        }
+      },
+      "calls": {
+        "empty": "La copia no tiene llamadas.",
+        "type": "Tipo",
+        "who": "Número",
+        "date": "Fecha",
+        "duration": "Duración",
+        "kinds": {
+          "1": "Entrante",
+          "2": "Saliente",
+          "3": "Perdida",
+          "4": "Buzón de voz",
+          "5": "Rechazada",
+          "6": "Bloqueada",
+          "other": "Otra"
+        }
+      },
+      "files": {
+        "empty": "La copia no tiene archivos.",
+        "root": "Archivos sueltos",
+        "up": "Subir",
+        "name": "Nombre",
+        "size": "Tamaño",
+        "date": "Modificado",
+        "items": "{count, plural, one {# elemento} other {# elementos}}",
+        "emptyFolder": "Carpeta vacía.",
+        "selected": "{count, plural, one {# seleccionado} other {# seleccionados}}",
+        "saveSelected": "Guardar en una carpeta…",
+        "saved": "{count, plural, one {# archivo guardado} other {# archivos guardados}} en {path}"
+      },
+      "wifi": {
+        "empty": "La copia no tiene redes Wi-Fi.",
+        "ssid": "Red",
+        "security": "Seguridad",
+        "hidden": "oculta",
+        "password": "Contraseña",
+        "show": "Mostrar contraseñas",
+        "hide": "Ocultar contraseñas",
+        "none": "sin contraseña",
+        "securityNames": {
+          "open": "Abierta",
+          "owe": "Abierta cifrada (OWE)",
+          "wep": "WEP",
+          "wpa2": "WPA/WPA2",
+          "wpa3": "WPA3",
+          "enterprise": "Empresa (802.1X)"
+        }
+      },
+      "settings": {
+        "empty": "La copia no tiene ajustes.",
+        "filter": "Filtrar",
+        "onlySelected": "Sólo los que se restauran",
+        "table": "Tabla",
+        "key": "Clave",
+        "value": "Valor",
+        "selected": "Se restaura"
+      },
+      "raw": {
+        "save": "Guardar una copia…",
+        "archive": "Contenido del archivo comprimido:"
+      }
+    },
+    "encrypted": "Cifrada",
+    "unlock": "Abrir",
+    "pack": {
+      "title": "Empaquetar en un fichero",
+      "encrypt": "Cifrar con contraseña",
+      "start": "Empaquetar",
+      "cancel": "Cancelar"
+    }
+  },
+  "restore": {
+    "chooseBackup": "Copia",
+    "noBackups": "No hay copias en la carpeta de copias. Haz una primero o elige otra carpeta en Mis copias.",
+    "target": "Móvil de destino",
+    "loading": "Comprobando qué se puede restaurar…",
+    "pickBackup": "Elige una copia para ver qué se puede restaurar en este móvil.",
+    "status": {
+      "ok": "Se restaura",
+      "limited": "Con limitaciones",
+      "blocked": "No se puede"
+    },
+    "why": "¿Por qué?",
+    "filter": "Estado",
+    "filterAll": "Todas",
+    "restoreApp": "Restaurar app",
+    "restoreData": "Restaurar datos",
+    "permissions": "Permisos",
+    "action": {
+      "install": "Se instalará",
+      "update": "Se actualizará",
+      "dataOnly": "Ya está instalada: sólo datos",
+      "skip": "Omitida"
+    },
+    "reason": {
+      "minSdkTooHigh": "Requiere un Android más nuevo.",
+      "targetSdkTooLow": "App demasiado antigua para Android 14 o posterior.",
+      "abiMismatch": "Hecha para otro tipo de procesador.",
+      "signatureMismatch": "Ya existe en este móvil con otra firma.",
+      "noApk": "La copia no tiene la app y no está instalada en este móvil.",
+      "systemAppAsUser": "App de sistema de otro móvil: se instala como app normal y puede no funcionar del todo.",
+      "keystore": "Sus datos dependen del móvil de origen; puede pedir volver a entrar o no funcionar.",
+      "installedNewer": "Este móvil ya tiene una versión más nueva; sólo se restauran los datos.",
+      "roleTaken": "Pasará a ser {role} en lugar de {holder}."
+    },
+    "reasonDetail": {
+      "minSdkTooHigh": "La app necesita SDK {minSdk} y este móvil tiene SDK {targetSdk}.",
+      "targetSdkTooLow": "La app se hizo para SDK {appTargetSdk}; Android 14 bloquea las apps para SDK menor de 23.",
+      "abiMismatch": "La app usa {appAbi}; este móvil admite {deviceAbis}.",
+      "signatureMismatch": "Android no permite reemplazar una app firmada por otro desarrollador.",
+      "noApk": "La copia se hizo sin la app (sólo datos).",
+      "systemAppAsUser": "Los permisos de sistema no se conceden a apps normales.",
+      "keystore": "Las claves del Android Keystore no salen del móvil donde se crearon.",
+      "installedNewer": "Instalada: {installed} · copia: {backup}.",
+      "roleTaken": ""
+    },
+    "noData": "La copia no tiene datos de esta app, o la versión instalada es más antigua que la de la copia.",
+    "advanced": {
+      "versions": "versionCode copia → móvil",
+      "signatures": "Firma copia / móvil",
+      "minSdk": "minSdk / SDK del móvil",
+      "abi": "ABI",
+      "installAsPlay": "Instalar como si viniera de Google Play (-i com.android.vending)",
+      "bypassTargetSdk": "Forzar apps antiguas en Android 14+ (--bypass-low-target-sdk-block, no verificado)",
+      "notInstalled": "no instalada"
+    },
+    "checklist": {
+      "title": "Antes de empezar",
+      "google": "Cuenta de Google iniciada en este móvil (necesaria para Chrome y las apps de sistema).",
+      "battery": "Batería suficiente o cargador conectado.",
+      "unlocked": "Móvil desbloqueado.",
+      "dontUse": "No usar el móvil durante la restauración."
+    },
+    "warningsTitle": "Avisos de compatibilidad",
+    "noWarnings": "Todas las apps elegidas se restauran sin limitaciones.",
+    "start": "Restaurar",
+    "summary": "{apps, plural, one {# app} other {# apps}} ({withData} con datos)",
+    "dataRestoreNote": "Las apps se cierran mientras se restauran sus datos.",
+    "unpacking": "Preparando la copia…",
+    "result": {
+      "done": "Restauración terminada",
+      "doneWithErrors": "Restauración terminada con errores",
+      "cancelled": "Restauración cancelada",
+      "failed": "No se pudo restaurar",
+      "summary": "{apps, plural, one {# app} other {# apps}} · {time}",
+      "pendingTitle": "Tareas pendientes",
+      "accounts": "Volver a entrar en estas cuentas: {list}.",
+      "bluetooth": "Volver a emparejar los dispositivos Bluetooth.",
+      "lock": "Configurar el bloqueo de pantalla y las huellas.",
+      "keystore": "Restaurar estas apps con su propia copia: {list}.",
+      "notifications": "Abrir una vez cada app restaurada para que se apliquen sus ajustes de notificaciones.",
+      "reboot": "Reiniciar el móvil.",
+      "export": "Exportar lista",
+      "perApp": "Detalle por app",
+      "uid": "UID nuevo",
+      "failedPermissions": "Permisos que fallaron",
+      "parts": "Datos restaurados",
+      "newRestore": "Nueva restauración",
+      "vcf": "Abre el fichero de contactos en la app Contactos para importarlos (está en Descargas/adbkeep-contacts.vcf).",
+      "wallpaper": "Pon como fondo la imagen Imágenes/adbkeep-wallpaper.png.",
+      "otherTitle": "Resto",
+      "otherDone": "{done} hechos · {failed} fallidos"
+    },
+    "roleNames": {
+      "SMS": "la app de SMS por defecto",
+      "DIALER": "el teléfono por defecto",
+      "BROWSER": "el navegador por defecto",
+      "HOME": "la pantalla de inicio por defecto",
+      "ASSISTANT": "el asistente por defecto"
+    },
+    "other": {
+      "reason": {
+        "empty": "La copia no tiene nada de esto.",
+        "helperRequired": "Necesita el ayudante en el móvil (Preferencias).",
+        "notSupported": "Todavía no se restaura; queda guardado en la copia.",
+        "mmsNotRestored": "Los MMS de la copia aún no se restauran; sólo los SMS.",
+        "wifiNeedsAndroid11": "Hace falta Android 11 o posterior en este móvil.",
+        "wifiSkipped": "{count, plural, one {# red} other {# redes}} (empresariales u ocultas por bytes) no se pueden recrear.",
+        "wallpaperManual": "La imagen se copia a Imágenes; tendrás que ponerla tú de fondo.",
+        "noWallpaperImage": "La copia no tiene imagen de fondo (se usaba uno del sistema).",
+        "scanAfterRestart": "Los archivos aparecerán al reiniciar el móvil."
+      },
+      "contactsVcf": "Abrir el .vcf en la app Contactos en vez de insertarlos",
+      "settingsCount": "{count, plural, one {# ajuste} other {# ajustes}}",
+      "folders": "Carpetas"
+    },
+    "summaryAll": "{apps, plural, one {# app} other {# apps}} ({withData} con datos) · {categories, plural, one {# categoría} other {# categorías}}",
+    "only": "Sólo se ha marcado «{item}». Puedes marcar más cosas en las pestañas."
+  }
+}
